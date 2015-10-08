@@ -4,8 +4,10 @@ Exec { path => "/usr/bin:/usr/sbin:/bin:/sbin" }
 
 node default {
 
+	package {["unzip"]:
+		ensure => present,
+	} ->
 	class { 'consul':
-		# join_cluster => '172.20.20.10',
 	  	config_hash => {
 			'datacenter'  => 'dc1',
 			'data_dir'    => '/opt/consul',
@@ -14,6 +16,7 @@ node default {
 			'log_level'   => 'INFO',
 			'node_name'   => 'webui',
 			'bind_addr'   => $::ipaddress_eth1,
+			'start_join' => [hiera('join_addr')],
 			'server'      => true,
 		}
 	}

@@ -7,19 +7,14 @@ class consul_client (
 	# DnsMasq to forward *.consul requests to local Consul DNS server
 	#
 
-	include dnsmasq
-	
-	dnsmasq::dnsserver { 'forward-zone-consul':
-		domain => "consul",
-		ip     => "127.0.0.1#8600",
-	}
-
 	#
 	# Consul Client Agent
 	#
+	package {["unzip"]:
+		ensure => present,
+	} ->
 
 	class { 'consul':
-		# join_cluster => hiera('join_addr'),
 		config_hash => {
 			'datacenter' => 'dc1',
 			'data_dir'   => '/opt/consul',
@@ -29,13 +24,23 @@ class consul_client (
 			'server'     => false,
 			'start_join' => [hiera('join_addr')],
 		}
+	} ->
+	class { 'dnsmasq':
+  }
+
+  dnsmasq::dnsserver { 'forward-zone-consul':
+		domain => "consul",
+		ip     => "127.0.0.1",
+    port   => "8600",
 	}
 
 	consul::service { $service_name:
-		tags           => ['actuator'],
-		port           => 8080,
-		check_script   => $health_path,
-		check_interval => '5s',
+		tags   => ['actuator'],
+		port   => 8080,
+    checks => [{
+      script   => $health_path,
+      interval => '5s',
+    }]
 	}
 
 }
