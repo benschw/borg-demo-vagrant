@@ -1,3 +1,1 @@
 # hiera/common.yaml
----
-join_addr: "172.20.20.10"

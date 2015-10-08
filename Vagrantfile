@@ -16,7 +16,7 @@ Vagrant.configure("2") do |config|
       puppet.hiera_config_path = "hiera/hiera.yaml"
       puppet.manifests_path = "puppet"
       puppet.module_path    = "puppet/modules"
-      puppet.manifest_file  = "server.pp"
+      puppet.manifest_file  = "node.pp"
       puppet.options = [
         # '--verbose',
         # '--debug',
@@ -35,7 +35,7 @@ Vagrant.configure("2") do |config|
       puppet.hiera_config_path = "hiera/hiera.yaml"
       puppet.manifests_path = "puppet"
       puppet.module_path    = "puppet/modules"
-      puppet.manifest_file  = "server.pp"
+      puppet.manifest_file  = "node.pp"
       puppet.options = [
         # '--verbose',
         # '--debug',
@@ -54,7 +54,7 @@ Vagrant.configure("2") do |config|
       puppet.hiera_config_path = "hiera/hiera.yaml"
       puppet.manifests_path = "puppet"
       puppet.module_path    = "puppet/modules"
-      puppet.manifest_file  = "server.pp"
+      puppet.manifest_file  = "node.pp"
       puppet.options = [
         # '--verbose',
         # '--debug',
@@ -73,7 +73,7 @@ Vagrant.configure("2") do |config|
       puppet.hiera_config_path = "hiera/hiera.yaml"
       puppet.manifests_path = "puppet"
       puppet.module_path    = "puppet/modules"
-      puppet.manifest_file  = "webui.pp"
+      puppet.manifest_file  = "node.pp"
       puppet.options = [
         # '--verbose',
         # '--debug',
@@ -92,7 +92,7 @@ Vagrant.configure("2") do |config|
       puppet.hiera_config_path = "hiera/hiera.yaml"
       puppet.manifests_path = "puppet"
       puppet.module_path    = "puppet/modules"
-      puppet.manifest_file  = "app.pp"
+      puppet.manifest_file  = "node.pp"
       puppet.options = [
         # '--verbose',
         # '--debug',
@@ -111,7 +111,7 @@ Vagrant.configure("2") do |config|
       puppet.hiera_config_path = "hiera/hiera.yaml"
       puppet.manifests_path = "puppet"
       puppet.module_path    = "puppet/modules"
-      puppet.manifest_file  = "app.pp"
+      puppet.manifest_file  = "node.pp"
       puppet.options = [
         # '--verbose',
         # '--debug',
@@ -130,7 +130,7 @@ Vagrant.configure("2") do |config|
       puppet.hiera_config_path = "hiera/hiera.yaml"
       puppet.manifests_path = "puppet"
       puppet.module_path    = "puppet/modules"
-      puppet.manifest_file  = "app.pp"
+      puppet.manifest_file  = "node.pp"
       puppet.options = [
         # '--verbose',
         # '--debug',

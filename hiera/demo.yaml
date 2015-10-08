@@ -1,1 +1,1 @@
-svc_name: "demo"
+role: roles::demosvc_name: "demo"consulclientprofile::service_name: "demo"consulclientprofile::health_path: "/vagrant/demo/health.py"consulclientprofile::start_join: "172.20.20.10"springbootprofile::service_name: "demo"springbootprofile::jar_path: "/vagrant/demo/build/libs/demo-0.1.0.jar"springbootprofile::health_path: "/vagrant/demo/health.py"

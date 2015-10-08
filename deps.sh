@@ -1,7 +1,6 @@
 #!/bin/sh
 
-rm -rf puppet/modules/*
-mkdir -p puppet/modules
+./clean.sh
 
 # common
 git clone git://github.com/puppetlabs/puppetlabs-stdlib.git puppet/modules/stdlib

@@ -6,4 +6,3 @@ demo/.gradle
 
 .vagrant
 
-puppet/modules/*
