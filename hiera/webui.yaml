@@ -1,3 +1,0 @@
-role: roles::consulwebui
-
-consulwebuiprofile::start_join: "172.20.20.10"

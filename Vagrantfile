@@ -6,73 +6,16 @@ Vagrant.configure("2") do |config|
   config.vm.box_url = "https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box"
   config.vm.box = "trusty64"
 
-  # consul0 ====================================================================
-  config.vm.define "consul0" do |consul0|
+  # node0 ====================================================================
+  config.vm.define "infra0" do |infra0|
 
-    consul0.vm.hostname = "consul0.local"
-    consul0.vm.network "private_network", ip: "172.20.20.10"
+    infra0.vm.hostname = "infra0.local"
+    infra0.vm.network "private_network", ip: "172.20.20.10"
 
-    consul0.vm.provision :puppet do |puppet|
+    infra0.vm.provision :puppet do |puppet|
       puppet.hiera_config_path = "hiera/hiera.yaml"
       puppet.manifests_path = "puppet"
-      puppet.module_path    = "puppet/modules"
-      puppet.manifest_file  = "node.pp"
-      puppet.options = [
-        # '--verbose',
-        # '--debug',
-      ]
-    end
-  end
-  # end ========================================================================
-
-  # consul1 ====================================================================
-  config.vm.define "consul1" do |consul1|
-
-    consul1.vm.hostname = "consul1.local"
-    consul1.vm.network "private_network", ip: "172.20.20.11"
-
-    consul1.vm.provision :puppet do |puppet|
-      puppet.hiera_config_path = "hiera/hiera.yaml"
-      puppet.manifests_path = "puppet"
-      puppet.module_path    = "puppet/modules"
-      puppet.manifest_file  = "node.pp"
-      puppet.options = [
-        # '--verbose',
-        # '--debug',
-      ]
-    end
-  end
-  # end ========================================================================
-
-  # consul2 ====================================================================
-  config.vm.define "consul2" do |consul2|
-
-    consul2.vm.hostname = "consul2.local"
-    consul2.vm.network "private_network", ip: "172.20.20.12"
-
-    consul2.vm.provision :puppet do |puppet|
-      puppet.hiera_config_path = "hiera/hiera.yaml"
-      puppet.manifests_path = "puppet"
-      puppet.module_path    = "puppet/modules"
-      puppet.manifest_file  = "node.pp"
-      puppet.options = [
-        # '--verbose',
-        # '--debug',
-      ]
-    end
-  end
-  # end ========================================================================
-
-  # web ui =====================================================================
-  config.vm.define "webui" do |webui|
-
-    webui.vm.hostname = "webui.local"
-    webui.vm.network "private_network", ip: "172.20.20.13"
-
-    webui.vm.provision :puppet do |puppet|
-      puppet.hiera_config_path = "hiera/hiera.yaml"
-      puppet.manifests_path = "puppet"
-      puppet.module_path    = "puppet/modules"
+      puppet.module_path    = ["puppet/modules", "puppet/local-modules"]
       puppet.manifest_file  = "node.pp"
       puppet.options = [
         # '--verbose',
@@ -83,53 +26,15 @@ Vagrant.configure("2") do |config|
   # end ========================================================================
 
   # demo =======================================================================
-  config.vm.define "demo" do |demo|
+  config.vm.define "app0" do |app0|
 
-    demo.vm.hostname = "demo.local"
-    demo.vm.network "private_network", ip: "172.20.20.20"
+    app0.vm.hostname = "app0.local"
+    app0.vm.network "private_network", ip: "172.20.20.11"
 
-    demo.vm.provision :puppet do |puppet|
+    app0.vm.provision :puppet do |puppet|
       puppet.hiera_config_path = "hiera/hiera.yaml"
       puppet.manifests_path = "puppet"
-      puppet.module_path    = "puppet/modules"
-      puppet.manifest_file  = "node.pp"
-      puppet.options = [
-        # '--verbose',
-        # '--debug',
-      ]
-    end
-  end
-  # end ========================================================================
-
-  # foo0 =======================================================================
-  config.vm.define "foo0" do |foo0|
-
-    foo0.vm.hostname = "foo0.local"
-    foo0.vm.network "private_network", ip: "172.20.20.21"
-
-    foo0.vm.provision :puppet do |puppet|
-      puppet.hiera_config_path = "hiera/hiera.yaml"
-      puppet.manifests_path = "puppet"
-      puppet.module_path    = "puppet/modules"
-      puppet.manifest_file  = "node.pp"
-      puppet.options = [
-        # '--verbose',
-        # '--debug',
-      ]
-    end
-  end
-  # end ========================================================================
-
-  # foo1 =======================================================================
-  config.vm.define "foo1" do |foo1|
-
-    foo1.vm.hostname = "foo1.local"
-    foo1.vm.network "private_network", ip: "172.20.20.22"
-
-    foo1.vm.provision :puppet do |puppet|
-      puppet.hiera_config_path = "hiera/hiera.yaml"
-      puppet.manifests_path = "puppet"
-      puppet.module_path    = "puppet/modules"
+      puppet.module_path    = ["puppet/modules", "puppet/local-modules"]
       puppet.manifest_file  = "node.pp"
       puppet.options = [
         # '--verbose',

@@ -1,8 +1,3 @@
-demo/demo.iml
-demo/demo.ipr
-demo/demo.iws
-demo/build
-demo/.gradle
-
 .vagrant
-
+borg-demo
+puppet/modules
