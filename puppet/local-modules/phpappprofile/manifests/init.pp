@@ -1,6 +1,7 @@
 class phpappprofile (
-	$service_name = 'unknown',
-	$svc_path     = 'unknown',
+  $service_name = 'unknown',
+  $svc_path     = 'unknown',
+  $cube_dc      = 'default',
 ){
 
 
@@ -18,7 +19,8 @@ class phpappprofile (
     pm_status_path         => '/fpm-status',
     ping_path              => '/fpm-ping',
     env                    => {
-      'FLIGLIO_ENV'        => 'vagrant',
+      'FLIGLIO_ENV' => 'vagrant',
+      'CUBE_DC'     => $cube_dc,
     },
     php_admin_flag         => {
       'expose_php' => 'Off',
@@ -34,7 +36,6 @@ class phpappprofile (
     listen_port    => '8080',
     listen_options => 'default_server',
     try_files      => ['$uri', '$uri/', '/index.php?fliglio_request=$uri&$args'],
-    underscores_in_headers => on,
   }
   nginx::resource::location { 'phpfpm_8080':
     location           => '~ [^/]\.php(/|$)',

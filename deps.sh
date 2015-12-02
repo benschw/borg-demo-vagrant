@@ -21,3 +21,5 @@ git clone https://github.com/puppetlabs/puppetlabs-rabbitmq.git puppet/modules/r
 git clone https://github.com/Slashbunny/puppet-phpfpm.git puppet/modules/phpfpm
 git clone https://github.com/jfryman/puppet-nginx.git puppet/modules/nginx
 
+# mysql
+git clone https://github.com/puppetlabs/puppetlabs-mysql.git puppet/modules/mysql

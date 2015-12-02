@@ -1,1 +1,0 @@
-role: roles::appsvc_name: "borg-demo"consulclientprofile::service_name: "borg-demo"consulclientprofile::health_path: "/vagrant/health.py"consulclientprofile::start_join: "172.20.20.10"phpappprofile::service_name: "borg-demo"phpappprofile::svc_path: "/vagrant/borg-demo/web/"

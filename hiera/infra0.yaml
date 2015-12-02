@@ -1,3 +1,0 @@
-role: roles::infra
-
-consulserverprofile::start_join: "172.20.20.10"

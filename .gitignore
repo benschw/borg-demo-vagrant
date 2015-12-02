@@ -1,3 +1,4 @@
 .vagrant
 borg-demo
 puppet/modules
+borg.sql

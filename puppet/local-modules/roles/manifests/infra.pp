@@ -3,4 +3,5 @@ class roles::infra {
   include consulserverprofile
   include rabbitmqserverprofile
   include chinchillaprofile
+  include mysqlmaster
 }

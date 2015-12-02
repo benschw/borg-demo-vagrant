@@ -1,15 +1,5 @@
 #!/bin/bash
 
-# wget https://dl.bintray.com/mitchellh/consul/0.5.2_linux_amd64.zip
-# unzip 0.5.2_linux_amd64.zip
-# wget https://dl.bintray.com/mitchellh/consul/0.5.2_web_ui.zip
-# unzip 0.5.2_web_ui.zip
-# mv dist /tmp/web-ui
-
-
-
-#USER=$(./chinchilla -keyring ./test-keys/.pubring.gpg encrypt guest)
-#PASS=$(./chinchilla -keyring ./test-keys/.pubring.gpg encrypt guest)
 USER=guest
 PASS=guest
 
@@ -19,6 +9,24 @@ user: $USER
 password: $PASS
 vhost: /
 servicename: rabbitmq
+EOF
+
+read -r -d '' DC0_CFG << EOF
+name: dc0
+user: guest
+password: guest
+vhost: /
+host: 172.20.10.10
+port: 5672
+EOF
+
+read -r -d '' DC1_CFG << EOF
+name: dc1
+user: guest
+password: guest
+vhost: /
+host: 172.20.20.10
+port: 5672
 EOF
 
 read -r -d '' BORG_CFG << EOF
@@ -34,32 +42,21 @@ queueconfig:
   exchangename: borg
 EOF
 
-read -r -d '' DC2_CFG << EOF
-name: dc2
-user: guest
-password: guest
-vhost: /
-host: localhost
-port: 5672
-EOF
-
 read -r -d '' REP_CFG << EOF
 name: Repeater
-servicename: foo
-uri: /foo
-method: POST
 consumerstrategy: topic
 deliverystrategy: topic-repeater
 queueconfig:
   prefetch: 5
-  topicname: "borg-demo.dc2.#"
+  topicname: "borg-demo.dc0.#"
   queuename: repeater-queue
   exchangename: borg
-  connection: dc2
-  exchangeout: borg-dc2
+  connection: dc0
+  exchangeout: borg-fwd
 EOF
-read -r -d '' BORG_DC2_CFG << EOF
-name: BorgDC2
+
+read -r -d '' BORG_FWD_CFG << EOF
+name: BorgFwd
 servicename: borg-demo
 uri: /borg
 method: POST
@@ -67,27 +64,22 @@ consumerstrategy: topic
 queueconfig:
   prefetch: 5
   topicname: "borg-demo.#"
-  queuename: borg-dc2
-  exchangename: borg-dc2
+  queuename: borg-fwd
+  exchangename: borg-fwd
 EOF
 
-read -r -d '' RABBIT_SVC << EOF
-{
-  "ID": "rabbitmq1",
-  "Name": "rabbitmq",
-  "Address": "172.20.20.20",
-  "Port": 5672
-}
-EOF
 
 echo "Configuring Consul"
 
-curl -X PUT http://172.20.20.10:8500/v1/kv/chinchilla/connection.yaml -d "$CONN_CFG"
-curl -X PUT http://172.20.20.10:8500/v1/kv/chinchilla/endpoints/borg.yaml -d "$BORG_CFG"
+curl -X PUT http://127.0.0.1:8500/v1/kv/chinchilla/connection.yaml -d "$CONN_CFG"
+curl -X PUT http://127.0.0.1:8500/v1/kv/chinchilla/endpoints/borg.yaml -d "$BORG_CFG"
 
-curl -X PUT http://172.20.20.10:8500/v1/kv/chinchilla/repeater/connections/dc2.yaml -d "$DC2_CFG"
-curl -X PUT http://172.20.20.10:8500/v1/kv/chinchilla/endpoints/repeater.yaml -d "$REP_CFG"
-curl -X PUT http://172.20.20.10:8500/v1/kv/chinchilla/endpoints/repeated.yaml -d "$BORG_DC2_CFG"
+curl -X PUT http://127.0.0.1:8500/v1/kv/chinchilla/repeater/connections/dc0.yaml -d "$DC0_CFG"
+curl -X PUT http://127.0.0.1:8500/v1/kv/chinchilla/repeater/connections/dc1.yaml -d "$DC1_CFG"
+curl -X PUT http://127.0.0.1:8500/v1/kv/chinchilla/endpoints/repeater.yaml -d "$REP_CFG"
+curl -X PUT http://127.0.0.1:8500/v1/kv/chinchilla/endpoints/borg-fwd.yaml -d "$BORG_FWD_CFG"
+
+sudo service chinchilla restart
 echo
 
 
