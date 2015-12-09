@@ -37,6 +37,20 @@ Vagrant.configure("2") do |config|
     end
   end
 
+  # app01
+  config.vm.define "app01" do |app01|
+
+    app01.vm.hostname = "app01.local"
+    app01.vm.network "private_network", ip: "172.20.10.12"
+
+    app01.vm.provision :puppet do |puppet|
+      puppet.hiera_config_path = "hiera/hiera.yaml"
+      puppet.manifests_path = "puppet"
+      puppet.module_path    = ["puppet/modules", "puppet/local-modules"]
+      puppet.manifest_file  = "node.pp"
+    end
+  end
+
   #=============================================================================
   # DC1
   #
@@ -68,6 +82,19 @@ Vagrant.configure("2") do |config|
     end
   end
 
+  # app11
+  config.vm.define "app11" do |app11|
+
+    app11.vm.hostname = "app11.local"
+    app11.vm.network "private_network", ip: "172.20.20.12"
+
+    app11.vm.provision :puppet do |puppet|
+      puppet.hiera_config_path = "hiera/hiera.yaml"
+      puppet.manifests_path = "puppet"
+      puppet.module_path    = ["puppet/modules", "puppet/local-modules"]
+      puppet.manifest_file  = "node.pp"
+    end
+  end
 
   #=============================================================================
   # common

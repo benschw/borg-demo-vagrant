@@ -1,7 +1,7 @@
 class roles::infra {
 	include apt
   include consulserverprofile
-  include rabbitmqserverprofile
+  include rabbitmqprofile
   include chinchillaprofile
-  include mysqlmaster
+  include mysqlprofile::mysqlmaster
 }

@@ -1,8 +1,8 @@
 class roles::infraslave {
 	include apt
   include consulserverprofile
-  include rabbitmqserverprofile
+  include rabbitmqprofile
   include chinchillaprofile
-  include mysqlslave
+  include mysqlprofile::mysqlslave
 }
 
