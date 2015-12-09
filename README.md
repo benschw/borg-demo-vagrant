@@ -31,11 +31,11 @@
 		- [rabbitmq](http://172.20.10.10:15672)
 		- [consul](http://172.20.10.10:8500)
 	- Demo
-		- `curl -x POST http://172.20.10.11:8080/life-form -d '["Jean-Luc Picard"]'`
+		- `curl -X POST http://172.20.10.11:8080/life-form -d '["Jean-Luc Picard"]'`
 - DC1
 	- Dashboard
 		- [rabbitmq](http://172.20.20.10:15672)
 		- [consul](http://172.20.20.10:8500)
 	- Demo
-		- `curl -x POST http://172.20.20.11:8080/life-form -d '["Jean-Luc Picard"]'`
+		- `curl -X POST http://172.20.20.11:8080/life-form -d '["Jean-Luc Picard"]'`
 
